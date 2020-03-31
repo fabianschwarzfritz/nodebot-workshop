@@ -1,0 +1,15 @@
+{
+  "name": "nodebot-workshop",
+  "version": "0.0.1",
+  "description": "Solutions to the Arduino Johnny-Five Nodebot workshop: https://www.npmjs.com/package/nodebot-workshop",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodebot-workshop verify 8-remote-temperature.js"
+  },
+  "author": "Fabian Schwarz-Fritz",
+  "license": "MIT",
+  "dependencies": {
+    "dnode": "^1.2.2",
+    "johnny-five": "^1.4.0"
+  }
+}
