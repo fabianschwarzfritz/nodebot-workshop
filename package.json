@@ -9,6 +9,8 @@
   "author": "Fabian Schwarz-Fritz",
   "license": "MIT",
   "dependencies": {
+    "@rainder/dgram-data": "^0.2.5",
+    "dgram": "^1.0.1",
     "dnode": "^1.2.2",
     "johnny-five": "^1.4.0"
   }
