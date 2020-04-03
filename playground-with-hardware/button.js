@@ -6,15 +6,17 @@ const LED_PIN = 13;
 
 board.on("ready", () => {
   const greenLed = new Led(LED_PIN);
-  const button = new Button(BUTTON_PIN);
+  const button = new Button({
+    pin: BUTTON_PIN,
+    holdtime: 3000
+  });
 
-  let greenLight = false;
   button.on("press", function() {
-    greenLight = !greenLight;
-    applyLight(greenLight, greenLed);
-  })
-});
+    greenLed.stop();
+    greenLed.toggle();
+  });
 
-function applyLight(lightValue, led) {
-  lightValue ? led.on() : led.off();
-}
+  button.on("hold", function() {
+    greenLed.blink();
+  });
+});
