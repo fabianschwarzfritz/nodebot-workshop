@@ -66,6 +66,20 @@ function signalError(l) {
 /** 
  * Prettifies the station time
  */
+// When next day this comes back: { time: '18.04.2020 06:23',
+//    status: 'OK',
+//    direction: 'Bismarckplatz',
+//    platform: 'B',
+//    transportation: 'STRAB',
+//    tourId: '2,224984',
+//    kindOfTour: '452',
+//    positionInTour: '7',
+//    statusNote: '',
+//    lineId: '22',
+//    lineLabel: '22',
+//    differenceTime: '400',
+//    foreignLine: 'false',
+//    newsAvailable: 'false' },
 function predictedTime(stationTime) {
   // The station time displays planned and actual departure.
   // For example:
