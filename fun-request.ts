@@ -64,40 +64,59 @@ function signalError(l) {
 }
 
 /** 
- * Prettifies the station time
+ * Prettifies the station time and returns a string
+ * representing the time in a nice and human readable
+ * way: "HH:MM"
  */
-// When next day this comes back: { time: '18.04.2020 06:23',
-//    status: 'OK',
-//    direction: 'Bismarckplatz',
-//    platform: 'B',
-//    transportation: 'STRAB',
-//    tourId: '2,224984',
-//    kindOfTour: '452',
-//    positionInTour: '7',
-//    statusNote: '',
-//    lineId: '22',
-//    lineLabel: '22',
-//    differenceTime: '400',
-//    foreignLine: 'false',
-//    newsAvailable: 'false' },
 function predictedTime(stationTime) {
   // The station time displays planned and actual departure.
   // For example:
-  //  - 19:03+0 (tram is on time)
-  //  - 19:03+3 (tram is 3 minutes late)
+  //  - 19:03+0 (tram is on time) -> result "19:03"
+  //  - 19:03+3 (tram is 3 minutes late) -> result: "19:06"
+  //  - 18.04.2020 02:03+3 (tram is 3 minutes
+  //              late but comes the next day)
+  //              -> result: "02:06"
   //
-  // We want to return the predicted time.
-  const info = stationTime.split('+');
-  const planned = info[0];
-  let minutesLater = info[1];
+  // We want to return the predicted time
+  // independent of the date.
 
-  const datestring = '1970-01-01T' + planned + ':00+01:00';
-  const predicted = new Date(datestring);
-  minutesLater = parseInt(minutesLater);
-  predicted.setUTCMinutes(predicted.getUTCMinutes() + minutesLater);
-  
-  const result = `${predicted.getHours()}:${predicted.getMinutes()}`;
-  return result
+  // If the next tram is the next day
+  // "18.04.2020 06:23" is returned
+  // and we detect it by splitting by space
+  const time = stationTime.split(" ");
+  if(time.length === 2) {
+    time = time[1];
+  } else if(time.length === 1) {
+    time = time[0]
+  } else {
+    throw new Error('Unknown time format');
+  }
+
+  // In case the tram is late, the time is
+  // displayed as "19:03+3" indicating that
+  // the tram is 3 minutes late.
+  // The prediction is that it arrives at
+  // 19:06.
+  time = time.split('+');
+  let planned;
+  let minutesLater;
+  if(time.length === 2) {
+    planned = time[0];
+    minutesLater = time[1];
+
+    const datestring = '1970-01-01T' + planned + ':00+01:00';
+    const predicted = new Date(datestring);
+    minutesLater = parseInt(minutesLater);
+    predicted.setUTCMinutes(predicted.getUTCMinutes() + minutesLater);
+
+    planned = `${predicted.getHours()}:${predicted.getMinutes()}`;
+  } else if(time.length === 1) {
+    planned = time[0];
+  } else {
+    throw new Error('Unknown time format');
+  }
+
+  return planned;
 }
 
 /**
