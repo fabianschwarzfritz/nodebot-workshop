@@ -10,9 +10,9 @@
   "license": "MIT",
   "dependencies": {
     "@rainder/dgram-data": "^0.2.5",
-    "@types/node": "^13.11.1",
+    "@types/node": "15.0.2",
     "dgram": "^1.0.1",
     "dnode": "^1.2.2",
-    "johnny-five": "^1.4.0"
+    "johnny-five": "2.0.0"
   }
 }
